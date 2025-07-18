@@ -49,7 +49,7 @@ WORKDIR /workspace
 
 # Copy default DeepSpeed Stage‑3 config (NVMe offload capable)
 # Supply this file next to Dockerfile or add separately.
-COPY ds_zero2_cpuoffload.json /workspace/
+COPY ds_zero3_nvme.json /workspace/
 
 # ── Entrypoint ────────────────────────────────────────────
 ENTRYPOINT ["/bin/bash"]
