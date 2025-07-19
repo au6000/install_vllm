@@ -1,33 +1,49 @@
-name: Remote Build for H100 Image
+name: Build & Push Unsloth Image
 
 on:
-  workflow_dispatch:
+  # 任意。main ブランチに push / PR マージ時のみ実行
   push:
-    paths:
-      - Dockerfile
-      - .github/workflows/build.yml
+    branches: [ "main" ]
+    paths: [ "Dockerfile", ".github/workflows/dockerhub-push.yml", "ds_zero3_nvme.json" ]
+  workflow_dispatch:   # 手動トリガ
 
 jobs:
-  remote-build:
+  build-and-push:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      # 1) ソース取得
+      - name: Checkout
         uses: actions/checkout@v4
+
+      # 2) QEMU / Buildx セットアップ
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: linux/amd64                # GPU用イメージは x86_64 のみ
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Login to DockerHub
+      # 3) Docker Hub にログイン
+      - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Remote build using DockerHub builder
+      # 4) Build & Push
+      - name: Build and push image
         uses: docker/build-push-action@v5
         with:
           context: .
-          push: true  # trueにするとDockerHubへpushできる
-          builder: default
+          file: ./Dockerfile           # パスを変更している場合は修正
           platforms: linux/amd64
+          # 例: {user}/unsloth-fa3-h100:commitsha,latest
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/unsloth-fa3-h100:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/unsloth-fa3-h100:${{ github.sha }}
+          push: true
+          provenance: false            # SBOM を生成しない場合は off に
+          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/unsloth-fa3-h100:cache
+          cache-to: type=inline        # 適宜
