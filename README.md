@@ -9,18 +9,19 @@
 https://docs.google.com/spreadsheets/d/1oqHeVwCXc6oPF1zQNwK40mahgqGCvJFJq7KeO4dIqeQ/edit?gid=0
 
 ## 1️⃣ 計算ノードに接続
-
-```ssh -i ~/.ssh/id_ed25519 <YOUR_USERNAME>@10.255.255.101```
-
+```bash
+ssh -i ~/.ssh/id_ed25519 <YOUR_USERNAME>@10.255.255.101
+```
 <YOUR_USERNAME> はスプレッドシートの内容に置き換えてください。
 
 ## 2️⃣ インストーラリポジトリをクローン
-
-```git clone https://github.com/au6000/install_vllm.git```
-
+```bash
+git clone https://github.com/au6000/install_vllm.git
+```
 🧹 kan.hataジョブを削除します：
-
-```bash cancel_kan_hata_jobs.sh```
+```bash
+bash cancel_kan_hata_jobs.sh
+```
 
 ## 4️⃣ 対話的GPUセッションを起動
 
@@ -32,8 +33,9 @@ srun --partition=P09 \
      --pty bash -i
 
 ## 5️⃣ インストーラを実行
-
-```bash vllm_install.sh```
+```bash
+bash vllm_install.sh
+```
 
 このスクリプトは以下を実行します：
 
