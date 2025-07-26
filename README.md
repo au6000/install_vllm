@@ -46,3 +46,14 @@ bash vllm_install.sh
 ⚙️ PyTorch、vLLM、FlashAttention、および必要なPythonパッケージのインストール
 
 ✅ 推論テストによるインストール確認
+
+## 6️⃣ Distill Qwen32Bで推論テストの実行
+vllm 環境をアクティベートします：
+```bash
+conda activate vllm
+```
+
+Pythonスクリプトを実行して推論を行います
+```python
+python run_local_DeepSeek-R1-Distill-Qwen-32B.py
+```
