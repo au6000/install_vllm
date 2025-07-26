@@ -13,13 +13,21 @@ log "🔧 Loading CUDA & cuDNN modules"
 module load cuda/12.4
 module load cudnn/9.6.0
 
-log "📦 Checking / installing Miniforge..."
+log "📦 Checking for Miniforge installation..."
 if [ ! -d "$CONDA_PREFIX" ]; then
-  log "🚀 Installing Miniforge silently..."
+  log "🚀 Miniforge not found. Installing now..."
+  # Download the installer
   curl -Ls https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh \
-       -o /tmp/miniforge.sh
+    -o /tmp/miniforge.sh
   chmod +x /tmp/miniforge.sh
+
   yes | /tmp/miniforge.sh -b -p "$CONDA_PREFIX"
+  rm /tmp/miniforge.sh
+
+  log "🔧 Initializing Conda for your shell. This will modify ~/.bashrc."
+  "$CONDA_PREFIX/bin/conda" init bash
+else
+  log "👍 Miniforge is already installed."
 fi
 
 log "🔧 Initializing conda shell"
