@@ -1,5 +1,8 @@
 # 🚀 クイックスタートガイド
 
+自分の環境ではすでに構築が終わっているため、vllm_install.shのテストを行えていません。
+おそらく環境構築は皆さん終わっていると思うので、特に気にしないでください。
+
 ## 🔧 前提条件
 
 🔑 SSHキーが存在すること
@@ -16,7 +19,7 @@ ssh -i ~/.ssh/id_ed25519 <YOUR_USERNAME>@10.255.255.101
 
 ## 2️⃣ インストーラリポジトリをクローン
 ```bash
-git clone https://github.com/au6000/install_vllm.git
+git clone https://github.com/LLMTeamAkiyama/install_vllm.git
 ```
 🧹 kan.hataジョブを削除します：
 ```bash
