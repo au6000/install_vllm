@@ -16,7 +16,7 @@ ssh -i ~/.ssh/id_ed25519 <YOUR_USERNAME>@10.255.255.101
 
 ## 2️⃣ インストーラリポジトリをクローン
 ```bash
-git clone https://github.com/LLMTeamAkiyama/install_vllm.git
+git clone https://github.com/au6000/install_vllm.git
 ```
 🧹 kan.hataジョブを削除します：
 ```bash
